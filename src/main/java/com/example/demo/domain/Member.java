@@ -31,8 +31,8 @@ public class Member {
 	@Column(name="m_id")
 	private Long m_id ;
 	
-	private String m_m_id;
-	private String m_pw;
+	private String loginid;
+	private String pw;
 	private String m_name;
 	private int m_birth;
 	private String m_address;
@@ -44,8 +44,8 @@ public class Member {
 	public static Member CreateMem(MemVO memVo, BCryptPasswordEncoder passwordEncoder) {
 		Member member = new Member();
 		member.setM_id((long) 1234);
-		member.setM_m_id(memVo.getM_m_id());
-		member.setM_pw(passwordEncoder.encode(memVo.getM_pw()));
+		member.setLoginid(memVo.getLoginid());
+		member.setPw(passwordEncoder.encode(memVo.getPw()));
 		member.setM_name(memVo.getM_name());
 		member.setM_birth(memVo.getM_birth());
 		member.setM_address(memVo.getM_address());

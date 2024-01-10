@@ -21,21 +21,25 @@ public class SecurityConfig {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((authorizeRequests) -> {
-                authorizeRequests.requestMatchers("/user/**").authenticated();
-                authorizeRequests.requestMatchers("/manager/**")
-                        .hasAnyRole("ADMIN", "MANAGER");
-                authorizeRequests.requestMatchers("/admin/**")
+                authorizeRequests.requestMatchers("/security-login/info").authenticated();
+                authorizeRequests.requestMatchers("/security-login/admin/**")
                         .hasRole("ADMIN");
                         
                 authorizeRequests.anyRequest().permitAll();
             })
 			.formLogin((formLogin) -> {
 				formLogin
-				.loginPage("/login")
-				.defaultSuccessUrl("/",true)
+				.usernameParameter("loginid")
+				.passwordParameter("pw")
+				.loginPage("/security-login/login")
+				.defaultSuccessUrl("/security-login")
+				.failureUrl("/security-login/login")
 				.permitAll();
 			})
-			.logout(logout -> logout.permitAll());
+			.logout(logout -> 
+			logout
+					.logoutUrl("/security-login/logout")
+					.invalidateHttpSession(true).deleteCookies("JSESSIONID"));
 			return http.build();
 				
 	}

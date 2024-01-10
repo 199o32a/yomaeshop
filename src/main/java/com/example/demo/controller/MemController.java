@@ -26,10 +26,6 @@ public class MemController {
 	private final MemService memService;
 	private final BCryptPasswordEncoder PasswordEncoder;
 	
-	@GetMapping("/")
-	public String info(Model model){
-		return "index";
-	}
 	
 	@GetMapping("/register")
 	public String memForm(@ModelAttribute("memVo") MemVO memVo) {
