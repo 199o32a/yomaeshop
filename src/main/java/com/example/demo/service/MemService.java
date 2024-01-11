@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -35,13 +36,13 @@ public class MemService {
 	}
 	
 	public Member login(LoginVO logVo) {
-		Optional<Member> optionalMem = memDao.findByLoginid(logVo.getLoginid());
+		List<Member> optionalMem = memDao.findByLoginid(logVo.getLoginid());
 		
 		if(optionalMem.isEmpty()) {
 			return null;
 		}
 		
-		Member member = optionalMem.get();
+		Member member = optionalMem.get(0);
 		
 		if(!member.getPw().equals(logVo.getPw())) {
 			return null;
@@ -53,9 +54,9 @@ public class MemService {
 	public Member getLoginUserByLoginId(String loginid) {
 		if(loginid == null) return null;
 		
-		Optional<Member> optionalMem = memDao.findByLoginid(loginid);
+		List<Member> optionalMem = memDao.findByLoginid(loginid);
 		if(optionalMem.isEmpty()) return null;
 		
-		return optionalMem.get();
+		return optionalMem.get(0);
 	}
 }

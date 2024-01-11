@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,8 +20,9 @@ public class PrincipalDetailsService implements UserDetailsService {
 	private final MemDAO memDao;
 	
 	@Override
-	public UserDetails loadUserByUsername(String m_name) throws UsernameNotFoundException{
-		Member member = memDao.findByLoginid(m_name)
+	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException{
+		List<Member> members = memDao.findByLoginid(loginid);
+		Member member = members.stream().findFirst()
 				.orElseThrow(() -> {
 						return new UsernameNotFoundException("해당 유저를 찾을 수 없습니다.");
 				});

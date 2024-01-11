@@ -28,12 +28,18 @@ public class MemController {
 	
 	
 	@GetMapping("/register")
-	public String memForm(@ModelAttribute("memVo") MemVO memVo) {
+	public String memForm(@ModelAttribute("memVo") MemVO memVo, Model model) {
+		model.addAttribute("loginType","security-login");
+		model.addAttribute("pageName","Security 로그인");
+		
+		model.addAttribute("memVo", new MemVO());
 		return "register";
 	}
 	
 	@PostMapping("/register")
 	public String memFormSave(@ModelAttribute("memVo") @Valid MemVO memVo, BindingResult bindingResult, Model model) {
+		model.addAttribute("loginType","security-login");
+		model.addAttribute("pageName","Security 로그인");
 		
 		if(bindingResult.hasErrors()) {
 			FieldError fieldError = bindingResult.getFieldError("m_birth");
